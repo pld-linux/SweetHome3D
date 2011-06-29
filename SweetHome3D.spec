@@ -14,7 +14,7 @@ Source0:	http://downloads.sourceforge.net/sweethome3d/%{name}-%{version}-src.zip
 URL:		http://www.sweethome3d.com/
 BuildRequires:	ant
 BuildRequires:	java-sun
-ExclusiveArch:	%{ix86} %{x8664}
+ExclusiveArch:	i586 i686 pentium3 pentium4 athlon %{x8664}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
