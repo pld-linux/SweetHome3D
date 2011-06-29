@@ -6,15 +6,14 @@
 Summary:	An interior design application
 Name:		SweetHome3D
 Version:	3.2
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://downloads.sourceforge.net/sweethome3d/%{name}-%{version}-src.zip
 # Source0-md5:	73ae64a8d5cfd418df79619d4b792ea9
 URL:		http://www.sweethome3d.com/
 BuildRequires:	ant
-BuildRequires:	java-sun
-ExclusiveArch:	i586 i686 pentium3 pentium4 athlon %{x8664}
+BuildRequires:	jdk
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
