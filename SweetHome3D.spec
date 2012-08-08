@@ -6,7 +6,7 @@
 Summary:	An interior design application
 Name:		SweetHome3D
 Version:	3.2
-Release:	2
+Release:	3
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://downloads.sourceforge.net/sweethome3d/%{name}-%{version}-src.zip
@@ -15,6 +15,8 @@ URL:		http://www.sweethome3d.com/
 BuildRequires:	ant
 BuildRequires:	jdk
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define		_noautoreq	'libCg.so(VERSION)' 'libCgGL.so(VERSION)'
 
 %description
 An interior design application.
