@@ -1,47 +1,55 @@
 #
 # TODO:	- use system java3d (it's GPL now), maybe other libs too
 #	- build and package applet
-#	- libCG*.so isn't required, package shouldn't provide libj3dcore-ogl*.so
 #
 Summary:	An interior design application
+Summary(pl.UTF-8):	Aplikacja do projektowania wnętrz
 Name:		SweetHome3D
-Version:	3.2
-Release:	3
+Version:	6.4.2
+Release:	1
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://downloads.sourceforge.net/sweethome3d/%{name}-%{version}-src.zip
-# Source0-md5:	73ae64a8d5cfd418df79619d4b792ea9
+# Source0-md5:	488847dfe26fb099feec7d10ce154dcd
 URL:		http://www.sweethome3d.com/
 BuildRequires:	ant
-BuildRequires:	jdk
+BuildRequires:	jdk >= 1.5
+BuildRequires:	sed >= 4.0
+# because of binary libs
+ExclusiveArch:	%{ix86} %{x8664}
+ExcludeArch:	i386 i486
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-%define		_noautoreq	'libCg.so(VERSION)' 'libCgGL.so(VERSION)'
 
 %description
 An interior design application.
 
+%description -l pl.UTF-8
+Aplikacja do projektowania wnętrz.
+
 %prep
 %setup -q -n %{name}-%{version}-src
-%{__sed} -e 's#exec "$PROGRAM_DIR"/jre1.6.0_23/bin/java#env java#g; 3,8 c\PROGRAM_DIR=%{_javadir}/SweetHome3D' \
-	-e 's#:"$PROGRAM_DIR"/jre1.6.0_23/lib/javaws.jar#:%{_jvmlibdir}/java/jre/lib/javaws.jar#' -i install/linux/SweetHome3D
-#	-e 's/$1/"$1"/' \
+
+%{__sed} -e 's#exec "$PROGRAM_DIR"/jre8/bin/java#env java#; 3,8 c\PROGRAM_DIR=%{_javadir}/SweetHome3D' \
+	-e 's#jogl-java3d.jar#&:"$PROGRAM_DIR"/lib/java3d-1.6/jogl-all.jar#' \
+	-e 's#:"$PROGRAM_DIR"/jre8/lib/javaws.jar#:%{_jvmlibdir}/java/jre/lib/javaws.jar#' -i install/linux/SweetHome3D
 
 %build
 %ant application furniture textures help
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
-install -d $RPM_BUILD_ROOT{%{_bindir},%{_javadir}/%{name}/lib}
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_javadir}/%{name}/lib/java3d-1.6}
 
 install install/linux/%{name} $RPM_BUILD_ROOT%{_bindir}
-install -p build/*.jar lib/*.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/lib
+cp -p build/*.jar lib/*.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/lib
+%{__rm} $RPM_BUILD_ROOT%{_javadir}/%{name}/lib/{j3dcore,j3dutils,vecmath}.jar
+cp -p lib/java3d-1.6/*.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/lib/java3d-1.6
+
 %ifarch %{ix86}
-install -p lib/linux/i386/libj3dcore-ogl*.so $RPM_BUILD_ROOT%{_javadir}/%{name}/lib
+install -p lib/java3d-1.6/linux/i586/*.so $RPM_BUILD_ROOT%{_javadir}/%{name}/lib/java3d-1.6
 %endif
 %ifarch %{x8664}
-install -p lib/linux/x64/libj3dcore-ogl.so $RPM_BUILD_ROOT%{_javadir}/%{name}/lib
+install -p lib/java3d-1.6/linux/amd64/*.so $RPM_BUILD_ROOT%{_javadir}/%{name}/lib/java3d-1.6
 %endif
 
 %clean
