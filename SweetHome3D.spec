@@ -5,12 +5,12 @@
 Summary:	An interior design application
 Summary(pl.UTF-8):	Aplikacja do projektowania wnętrz
 Name:		SweetHome3D
-Version:	6.4.2
-Release:	2
+Version:	6.6
+Release:	1
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://downloads.sourceforge.net/sweethome3d/%{name}-%{version}-src.zip
-# Source0-md5:	488847dfe26fb099feec7d10ce154dcd
+# Source0-md5:	4f63d8f39afdcdebfb7429ef6486b564
 URL:		http://www.sweethome3d.com/
 BuildRequires:	ant
 BuildRequires:	jdk >= 1.5
@@ -19,6 +19,8 @@ BuildRequires:	sed >= 4.0
 ExclusiveArch:	%{ix86} %{x8664}
 ExcludeArch:	i386 i486
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define		_debugsource_packages	0
 
 %description
 An interior design application.
