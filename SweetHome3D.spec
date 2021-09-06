@@ -6,7 +6,7 @@ Summary:	An interior design application
 Summary(pl.UTF-8):	Aplikacja do projektowania wnętrz
 Name:		SweetHome3D
 Version:	6.4.2
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://downloads.sourceforge.net/sweethome3d/%{name}-%{version}-src.zip
